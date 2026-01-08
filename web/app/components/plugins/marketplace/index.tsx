@@ -1,8 +1,6 @@
 import { MarketplaceContextProvider } from './context'
 import Description from './description'
-import IntersectionLine from './intersection-line'
-import SearchBoxWrapper from './search-box/search-box-wrapper'
-import PluginTypeSwitch from './plugin-type-switch'
+import StickySearchAndSwitchWrapper from './sticky-search-and-switch-wrapper'
 import ListWrapper from './list/list-wrapper'
 import type { MarketplaceCollection, SearchParams } from './types'
 import type { Plugin } from '@/app/components/plugins/types'
@@ -11,23 +9,25 @@ import { TanstackQueryInitializer } from '@/context/query-client'
 
 type MarketplaceProps = {
   locale: string
-  searchBoxAutoAnimate?: boolean
   showInstallButton?: boolean
   shouldExclude?: boolean
   searchParams?: SearchParams
   pluginTypeSwitchClassName?: string
-  intersectionContainerId?: string
+  stickySearchAndSwitch?: boolean
+  stickySearchTopClassName?: string
+  stickySearchWrapperClassName?: string
   scrollContainerId?: string
   showSearchParams?: boolean
 }
 const Marketplace = async ({
   locale,
-  searchBoxAutoAnimate = true,
   showInstallButton = true,
   shouldExclude,
   searchParams,
   pluginTypeSwitchClassName,
-  intersectionContainerId,
+  stickySearchAndSwitch = false,
+  stickySearchTopClassName,
+  stickySearchWrapperClassName,
   scrollContainerId,
   showSearchParams = true,
 }: MarketplaceProps) => {
@@ -48,15 +48,12 @@ const Marketplace = async ({
         showSearchParams={showSearchParams}
       >
         <Description locale={locale} />
-        <IntersectionLine intersectionContainerId={intersectionContainerId} />
-        <SearchBoxWrapper
+        <StickySearchAndSwitchWrapper
           locale={locale}
-          searchBoxAutoAnimate={searchBoxAutoAnimate}
-        />
-        <PluginTypeSwitch
-          locale={locale}
-          className={pluginTypeSwitchClassName}
-          searchBoxAutoAnimate={searchBoxAutoAnimate}
+          sticky={stickySearchAndSwitch}
+          stickyTopClassName={stickySearchTopClassName}
+          wrapperClassName={stickySearchWrapperClassName}
+          pluginTypeSwitchClassName={pluginTypeSwitchClassName}
           showSearchParams={showSearchParams}
         />
         <ListWrapper

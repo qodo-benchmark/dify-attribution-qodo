@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useContext } from 'use-context-selector'
 import Link from 'next/link'
@@ -136,10 +136,30 @@ const PluginPage = ({
   }] = useBoolean(false)
   const [currentFile, setCurrentFile] = useState<File | null>(null)
   const containerRef = usePluginPageContext(v => v.containerRef)
+  const headerRef = useRef<HTMLDivElement | null>(null)
   const options = usePluginPageContext(v => v.options)
   const activeTab = usePluginPageContext(v => v.activeTab)
   const setActiveTab = usePluginPageContext(v => v.setActiveTab)
   const { enable_marketplace } = useGlobalPublicStore(s => s.systemFeatures)
+
+  useLayoutEffect(() => {
+    const headerElement = headerRef.current
+    const containerElement = containerRef?.current
+    if (!headerElement || !containerElement)
+      return
+
+    const updateHeaderHeight = () => {
+      containerElement.style.setProperty('--plugin-page-header-height', `${headerElement.offsetHeight}px`)
+    }
+
+    updateHeaderHeight()
+    const resizeObserver = new ResizeObserver(updateHeaderHeight)
+    resizeObserver.observe(headerElement)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [containerRef])
 
   const isPluginsTab = useMemo(() => activeTab === PLUGIN_PAGE_TABS_MAP.plugins, [activeTab])
   const isExploringMarketplace = useMemo(() => {
@@ -173,6 +193,7 @@ const PluginPage = ({
       )}
     >
       <div
+        ref={headerRef}
         className={cn(
           'sticky top-0 z-10 flex min-h-[60px] items-center gap-1 self-stretch bg-components-panel-bg px-12 pb-2 pt-4', isExploringMarketplace && 'bg-background-body',
         )}
