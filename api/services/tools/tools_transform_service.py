@@ -204,7 +204,7 @@ class ToolTransformService:
         provider_controller: WorkflowToolProviderController,
         labels: list[str] | None = None,
         workflow_app_id: str | None = None,
-    ):
+    ) -> ToolProviderApiEntity:
         """
         convert provider controller to user provider
         """
