@@ -7,7 +7,7 @@ def is_enabled() -> bool:
     return True
 
 
-def init_app(app: DifyApp):
+def init_app(app: DifyApp) -> None:
     """Resolve Pydantic forward refs that would otherwise cause circular imports.
 
     Rebuilds models in core.app.entities.app_invoke_entities with the real TraceQueueManager type.
