@@ -6,28 +6,34 @@ import cn from '@/utils/classnames'
 
 type StickySearchAndSwitchWrapperProps = {
   locale?: string
+  sticky?: boolean
+  stickyTopClassName?: string
+  wrapperClassName?: string
   pluginTypeSwitchClassName?: string
   showSearchParams?: boolean
 }
 
 const StickySearchAndSwitchWrapper = ({
   locale,
+  sticky = false,
+  stickyTopClassName,
+  wrapperClassName,
   pluginTypeSwitchClassName,
   showSearchParams,
 }: StickySearchAndSwitchWrapperProps) => {
-  const hasCustomTopClass = pluginTypeSwitchClassName?.includes('top-')
-
   return (
     <div
       className={cn(
         'mt-4 bg-background-body',
-        hasCustomTopClass && 'sticky z-10',
-        pluginTypeSwitchClassName,
+        sticky && 'sticky z-[5]',
+        sticky && (stickyTopClassName ?? 'top-[var(--plugin-page-header-height,60px)]'),
+        wrapperClassName,
       )}
     >
       <SearchBoxWrapper locale={locale} />
       <PluginTypeSwitch
         locale={locale}
+        className={pluginTypeSwitchClassName}
         showSearchParams={showSearchParams}
       />
     </div>

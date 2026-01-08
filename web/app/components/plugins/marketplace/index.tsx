@@ -13,6 +13,9 @@ type MarketplaceProps = {
   shouldExclude?: boolean
   searchParams?: SearchParams
   pluginTypeSwitchClassName?: string
+  stickySearchAndSwitch?: boolean
+  stickySearchTopClassName?: string
+  stickySearchWrapperClassName?: string
   scrollContainerId?: string
   showSearchParams?: boolean
 }
@@ -22,6 +25,9 @@ const Marketplace = async ({
   shouldExclude,
   searchParams,
   pluginTypeSwitchClassName,
+  stickySearchAndSwitch = false,
+  stickySearchTopClassName,
+  stickySearchWrapperClassName,
   scrollContainerId,
   showSearchParams = true,
 }: MarketplaceProps) => {
@@ -44,6 +50,9 @@ const Marketplace = async ({
         <Description locale={locale} />
         <StickySearchAndSwitchWrapper
           locale={locale}
+          sticky={stickySearchAndSwitch}
+          stickyTopClassName={stickySearchTopClassName}
+          wrapperClassName={stickySearchWrapperClassName}
           pluginTypeSwitchClassName={pluginTypeSwitchClassName}
           showSearchParams={showSearchParams}
         />

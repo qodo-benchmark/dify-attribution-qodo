@@ -8,7 +8,14 @@ const PluginList = async () => {
   return (
     <PluginPage
       plugins={<PluginsPanel />}
-      marketplace={<Marketplace locale={locale} pluginTypeSwitchClassName='top-[60px]' showSearchParams={false} />}
+      marketplace={(
+        <Marketplace
+          locale={locale}
+          stickySearchAndSwitch
+          stickySearchTopClassName='top-[var(--plugin-page-header-height,60px)]'
+          showSearchParams={false}
+        />
+      )}
     />
   )
 }
